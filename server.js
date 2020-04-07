@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var jsonarry = [];
 
 app.get('/scrape', function (req, res) {
-
+//Run localhost:3000/scrape
     // --------------------------- COINTOPPER-SCRAPING----------------------------------------//
 
     url = 'https://cointopper.com/';
@@ -95,13 +95,40 @@ app.get('/scrape', function (req, res) {
             }
         });
 
-        //----------------------------- MYSQL connection and add data --------------------------// 
+        //----------------------------- MYSQL connection and add data --------------------------//
 
     });
+}) 
+
+
+//---------------------------------  REST API -----------------------------------------//
+
+//localhost:3000/scrape/api/coins
+
+// Configure MySQL connection
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'qwe123qwe',
+    database: 'Cointopper'
 })
 
+app.use(bodyParser.json());       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    extended: true
+}));
 
-app.listen('8081')
-console.log('Magic happens on port 8081');
+
+//rest api to get all coins details
+app.get('/scrape/api/coins', function (req, res) {
+    connection.query('select * from coindetails', function (error, results, fields) {
+        if (error) throw error;
+        res.end(JSON.stringify(results));
+    });
+});
+
+
+app.listen('3000')
+console.log('Magic happens on port 3000');
 exports = module.exports = app;
 
