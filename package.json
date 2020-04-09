@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "live": "nodemon server.js",
   "scripts": {
+    "start:watch": "tsc-watch --target es2017 --outDir ./dist --onSuccess \"node .\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
@@ -15,6 +17,10 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
+    "node-cron": "^2.0.3",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "tsc-watch": "^4.2.3"
   }
 }
